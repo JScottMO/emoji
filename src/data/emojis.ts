@@ -1,11 +1,10 @@
-import emojiData from "unicode-emoji-json/data-by-group.json";
+import emojiGroupData from "unicode-emoji-json/data-by-group.json";
 
 export interface EmojiEntry {
   emoji: string;
   name: string;
   slug: string;
   group: string;
-  subGroup: string;
   codePoints: string;
   shortcode: string;
 }
@@ -32,29 +31,35 @@ const allEmojis: EmojiEntry[] = [];
 const categoryMap = new Map<string, EmojiEntry[]>();
 const slugMap = new Map<string, EmojiEntry>();
 
-// Process grouped data
-for (const [group, subGroups] of Object.entries(emojiData)) {
-  for (const [subGroup, emojis] of Object.entries(subGroups as Record<string, any[]>)) {
-    for (const item of emojis) {
-      const entry: EmojiEntry = {
-        emoji: item.emoji,
-        name: item.name,
-        slug: toSlug(item.name),
-        group,
-        subGroup,
-        codePoints: getCodePoints(item.emoji),
-        shortcode: toShortcode(item.name),
-      };
-      
-      // Skip skin tone variants and other modifiers to keep dataset clean
-      if (item.skin_tone_support && entry.slug !== toSlug(item.name)) continue;
-      
-      allEmojis.push(entry);
-      slugMap.set(entry.slug, entry);
-      
-      if (!categoryMap.has(group)) categoryMap.set(group, []);
-      categoryMap.get(group)!.push(entry);
-    }
+interface GroupData {
+  name: string;
+  slug: string;
+  emojis: Array<{
+    emoji: string;
+    skin_tone_support: boolean;
+    name: string;
+    slug: string;
+    unicode_version: string;
+    emoji_version: string;
+  }>;
+}
+
+for (const group of emojiGroupData as GroupData[]) {
+  for (const item of group.emojis) {
+    const entry: EmojiEntry = {
+      emoji: item.emoji,
+      name: item.name,
+      slug: toSlug(item.name),
+      group: group.name,
+      codePoints: getCodePoints(item.emoji),
+      shortcode: toShortcode(item.name),
+    };
+
+    allEmojis.push(entry);
+    slugMap.set(entry.slug, entry);
+
+    if (!categoryMap.has(group.name)) categoryMap.set(group.name, []);
+    categoryMap.get(group.name)!.push(entry);
   }
 }
 
@@ -74,19 +79,14 @@ export function searchEmojis(query: string): EmojiEntry[] {
       e.name.toLowerCase().includes(q) ||
       e.shortcode.includes(q) ||
       e.emoji === q ||
-      e.group.toLowerCase().includes(q) ||
-      e.subGroup.toLowerCase().includes(q)
+      e.group.toLowerCase().includes(q)
   );
 }
 
 export function getRelatedEmojis(entry: EmojiEntry, count = 12): EmojiEntry[] {
-  const sameSubGroup = allEmojis.filter(
-    (e) => e.subGroup === entry.subGroup && e.slug !== entry.slug
-  );
-  const sameGroup = allEmojis.filter(
-    (e) => e.group === entry.group && e.subGroup !== entry.subGroup && e.slug !== entry.slug
-  );
-  return [...sameSubGroup, ...sameGroup].slice(0, count);
+  return allEmojis
+    .filter((e) => e.group === entry.group && e.slug !== entry.slug)
+    .slice(0, count);
 }
 
 export function getRandomEmoji(): EmojiEntry {
@@ -101,7 +101,6 @@ export function getTwemojiUrl(emoji: string): string {
   return `https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/${codePoints}.png`;
 }
 
-// Category display names mapping
 export const categoryDisplayNames: Record<string, string> = {
   "Smileys & Emotion": "😊 Smileys",
   "People & Body": "👋 People",
@@ -112,5 +111,5 @@ export const categoryDisplayNames: Record<string, string> = {
   Objects: "💡 Objects",
   Symbols: "💠 Symbols",
   Flags: "🏳️ Flags",
-  "Component": "🔧 Component",
+  Component: "🔧 Component",
 };
