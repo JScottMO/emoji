@@ -1,12 +1,15 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Search } from "lucide-react";
 import { emojis, searchEmojis, categories, categoryDisplayNames } from "@/data/emojis";
 import EmojiCard from "@/components/EmojiCard";
 import CategoryChip from "@/components/CategoryChip";
 
+const PAGE_SIZE = 200;
+
 const Index = () => {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const results = useMemo(() => {
     let filtered = query ? searchEmojis(query) : emojis;
@@ -15,6 +18,17 @@ const Index = () => {
     }
     return filtered;
   }, [query, activeCategory]);
+
+  // Reset visible count when filters change
+  const handleCategoryChange = useCallback((cat: string | null) => {
+    setActiveCategory(cat);
+    setVisibleCount(PAGE_SIZE);
+  }, []);
+
+  const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    setVisibleCount(PAGE_SIZE);
+  }, []);
 
   return (
     <div className="container py-8 sm:py-12">
@@ -35,7 +49,7 @@ const Index = () => {
           <input
             type="text"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleQueryChange}
             placeholder="Search emojis..."
             className="w-full rounded-lg border border-input bg-background py-3 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 transition-shadow"
           />
@@ -47,7 +61,7 @@ const Index = () => {
         <CategoryChip
           label="All"
           active={activeCategory === null}
-          onClick={() => setActiveCategory(null)}
+          onClick={() => handleCategoryChange(null)}
         />
         {categories
           .filter((c) => c !== "Component")
@@ -56,7 +70,7 @@ const Index = () => {
               key={cat}
               label={categoryDisplayNames[cat] || cat}
               active={activeCategory === cat}
-              onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
+              onClick={() => handleCategoryChange(activeCategory === cat ? null : cat)}
             />
           ))}
       </div>
@@ -69,15 +83,23 @@ const Index = () => {
 
       {/* Grid */}
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-        {results.slice(0, 200).map((entry) => (
+        {results.slice(0, visibleCount).map((entry) => (
           <EmojiCard key={entry.slug} entry={entry} />
         ))}
       </div>
 
-      {results.length > 200 && (
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          Showing first 200 results. Refine your search to see more.
-        </p>
+      {results.length > visibleCount && (
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+            className="rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Load more
+          </button>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Showing {Math.min(visibleCount, results.length).toLocaleString()} of {results.length.toLocaleString()}
+          </p>
+        </div>
       )}
 
       {results.length === 0 && (

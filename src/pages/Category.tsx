@@ -10,7 +10,9 @@ const Category = () => {
     (c) => c.toLowerCase().replace(/[^a-z]+/g, "-") === name
   );
   
-  const categoryEmojis = category ? emojisByCategory.get(category) || [] : [];
+  const categoryEmojis = category 
+    ? [...(emojisByCategory.get(category) || [])].sort((a, b) => a.popularity - b.popularity) 
+    : [];
 
   if (!category) {
     return (
