@@ -114,6 +114,7 @@ for (const group of emojiGroupData as GroupData[]) {
       group: group.name,
       codePoints: getCodePoints(item.emoji),
       shortcode: toShortcode(item.name),
+      popularity: popularityMap.has(item.emoji) ? popularityMap.get(item.emoji)! : 9999,
     };
 
     allEmojis.push(entry);
