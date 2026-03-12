@@ -3,6 +3,7 @@ import { getEmojiBySlug, getRelatedEmojis, getTwemojiUrl } from "@/data/emojis";
 import { getEmojiCombosFor } from "@/data/combos";
 import CopyButton from "@/components/CopyButton";
 import EmojiCard from "@/components/EmojiCard";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const EmojiDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -30,7 +31,10 @@ const EmojiDetail = () => {
 
       <div className="mx-auto max-w-2xl">
         {/* Main display */}
-        <div className="mb-8 rounded-xl bg-card p-8 text-center emoji-card-shadow">
+        <div className="mb-8 rounded-xl bg-card p-8 text-center emoji-card-shadow relative">
+          <div className="absolute top-3 right-3">
+            <FavoriteButton type="emoji" itemKey={entry.slug} />
+          </div>
           <span className="text-8xl sm:text-[128px] select-none">{entry.emoji}</span>
           <h1 className="mt-4 text-2xl font-bold capitalize text-foreground">{entry.name}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{entry.group}</p>
@@ -80,7 +84,10 @@ const EmojiDetail = () => {
                     <span className="text-2xl mr-2">{combo.combo}</span>
                     <span className="text-sm text-muted-foreground">{combo.label}</span>
                   </div>
-                  <CopyButton text={combo.combo} />
+                  <div className="flex items-center gap-1">
+                    <CopyButton text={combo.combo} />
+                    <FavoriteButton type="combo" itemKey={combo.combo} />
+                  </div>
                 </div>
               ))}
             </div>

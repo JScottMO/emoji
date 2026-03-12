@@ -2,6 +2,7 @@ import { useState } from "react";
 import { emojiCombos, moods } from "@/data/combos";
 import CopyButton from "@/components/CopyButton";
 import CategoryChip from "@/components/CategoryChip";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const Combos = () => {
   const [activeMood, setActiveMood] = useState<string | null>(null);
@@ -49,7 +50,10 @@ const Combos = () => {
                   <p className="text-xs text-muted-foreground">{combo.mood}</p>
                 </div>
               </div>
-              <CopyButton text={combo.combo} label="Copy" />
+              <div className="flex items-center gap-1">
+                <CopyButton text={combo.combo} label="Copy" />
+                <FavoriteButton type="combo" itemKey={combo.combo} />
+              </div>
             </div>
           ))}
         </div>

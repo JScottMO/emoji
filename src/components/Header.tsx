@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { Heart, LogOut, User } from "lucide-react";
 
 const navLinks = [
   { label: "Browse", path: "/" },
@@ -9,6 +11,7 @@ const navLinks = [
 
 const Header = () => {
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -30,6 +33,36 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+
+          {user ? (
+            <>
+              <Link
+                to="/favorites"
+                className={`rounded-md p-1.5 transition-colors ${
+                  location.pathname === "/favorites"
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                aria-label="Favorites"
+              >
+                <Heart className="h-4 w-4" />
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="rounded-md p-1.5 text-muted-foreground transition-colors hover:text-foreground"
+                aria-label="Sign out"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/auth"
+              className="ml-1 rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Sign in
+            </Link>
+          )}
         </nav>
       </div>
     </header>
