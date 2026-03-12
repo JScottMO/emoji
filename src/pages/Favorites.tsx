@@ -1,6 +1,6 @@
+import { useFavoritesContext } from "@/contexts/FavoritesContext";
 import { useAuth } from "@/hooks/useAuth";
-import { useFavorites } from "@/hooks/useFavorites";
-import { getEmojiBySlug, emojis } from "@/data/emojis";
+import { emojis } from "@/data/emojis";
 import { emojiCombos } from "@/data/combos";
 import EmojiCard from "@/components/EmojiCard";
 import CopyButton from "@/components/CopyButton";
@@ -58,7 +58,7 @@ ${favCombos.map((c) => `<div class="combo"><span class="emojis">${c.combo}</span
 
 const Favorites = () => {
   const { user } = useAuth();
-  const { favorites, loading, isFavorite, toggleFavorite } = useFavorites();
+  const { favorites, loading } = useFavoritesContext();
 
   if (!user) return <Navigate to="/auth" replace />;
 

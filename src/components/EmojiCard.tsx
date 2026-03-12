@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useCallback } from "react";
 import { Check } from "lucide-react";
 import type { EmojiEntry } from "@/data/emojis";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface EmojiCardProps {
   entry: EmojiEntry;
@@ -32,17 +33,20 @@ const EmojiCard = ({ entry }: EmojiCardProps) => {
       <span className="text-xs text-muted-foreground text-center leading-tight line-clamp-2">
         {entry.name}
       </span>
-      <button
-        onClick={handleCopy}
-        className="absolute top-2 right-2 rounded-md p-1 text-muted-foreground opacity-0 transition-all hover:bg-secondary group-hover:opacity-100"
-        aria-label={`Copy ${entry.name}`}
-      >
-        {copied ? (
-          <Check className="h-3.5 w-3.5 text-primary" />
-        ) : (
-          <span className="text-xs">Copy</span>
-        )}
-      </button>
+      <div className="absolute top-1.5 right-1.5 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+        <FavoriteButton type="emoji" itemKey={entry.slug} />
+        <button
+          onClick={handleCopy}
+          className="rounded-md p-1 text-muted-foreground transition-all hover:bg-secondary"
+          aria-label={`Copy ${entry.name}`}
+        >
+          {copied ? (
+            <Check className="h-3.5 w-3.5 text-primary" />
+          ) : (
+            <span className="text-xs">Copy</span>
+          )}
+        </button>
+      </div>
     </Link>
   );
 };
