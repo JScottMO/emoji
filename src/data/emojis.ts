@@ -125,6 +125,7 @@ for (const group of emojiGroupData as GroupData[]) {
   }
 }
 
+allEmojis.sort((a, b) => a.popularity - b.popularity);
 export const emojis = allEmojis;
 export const categories = Array.from(categoryMap.keys());
 export const emojisByCategory = categoryMap;
