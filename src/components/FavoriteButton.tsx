@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useFavoritesContext } from "@/contexts/FavoritesContext";
 import { useNavigate } from "react-router-dom";
