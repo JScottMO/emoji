@@ -1,8 +1,9 @@
 import { useState, useMemo, useCallback } from "react";
-import { Search } from "lucide-react";
+import { Search, BarChart3 } from "lucide-react";
 import { emojis, searchEmojis, categories, categoryDisplayNames } from "@/data/emojis";
 import EmojiCard from "@/components/EmojiCard";
 import CategoryChip from "@/components/CategoryChip";
+import { useCopyStats } from "@/hooks/useCopyStats";
 
 const PAGE_SIZE = 200;
 
