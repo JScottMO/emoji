@@ -1,10 +1,12 @@
 import { useState, useCallback } from "react";
 import { Check, Copy } from "lucide-react";
+import { useTrackCopy } from "@/hooks/useCopyStats";
 
 interface CopyButtonProps {
   text: string;
   label?: string;
   className?: string;
+  emojiSlug?: string;
 }
 
 const CopyButton = ({ text, label, className = "" }: CopyButtonProps) => {
