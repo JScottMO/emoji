@@ -11,6 +11,7 @@ const Index = () => {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const { totalCopies } = useCopyStats();
 
   const results = useMemo(() => {
     let filtered = query ? searchEmojis(query) : emojis;
