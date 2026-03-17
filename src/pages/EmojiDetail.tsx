@@ -42,9 +42,9 @@ const EmojiDetail = () => {
 
         {/* Copy actions */}
         <div className="mb-8 flex flex-wrap justify-center gap-2">
-          <CopyButton text={entry.emoji} label="Copy Emoji" />
-          <CopyButton text={entry.codePoints} label={entry.codePoints} />
-          <CopyButton text={entry.shortcode} label={entry.shortcode} />
+          <CopyButton text={entry.emoji} label="Copy Emoji" emojiSlug={entry.slug} />
+          <CopyButton text={entry.codePoints} label={entry.codePoints} emojiSlug={entry.slug} />
+          <CopyButton text={entry.shortcode} label={entry.shortcode} emojiSlug={entry.slug} />
         </div>
 
         {/* Size previews */}
