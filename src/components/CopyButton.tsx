@@ -1,24 +1,28 @@
 import { useState, useCallback } from "react";
 import { Check, Copy } from "lucide-react";
+import { useTrackCopy } from "@/hooks/useCopyStats";
 
 interface CopyButtonProps {
   text: string;
   label?: string;
   className?: string;
+  emojiSlug?: string;
 }
 
-const CopyButton = ({ text, label, className = "" }: CopyButtonProps) => {
+const CopyButton = ({ text, label, className = "", emojiSlug }: CopyButtonProps) => {
   const [copied, setCopied] = useState(false);
+  const trackCopy = useTrackCopy();
 
   const handleCopy = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
       e.preventDefault();
       navigator.clipboard.writeText(text);
+      if (emojiSlug) trackCopy(emojiSlug);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     },
-    [text]
+    [text, emojiSlug, trackCopy]
   );
 
   return (

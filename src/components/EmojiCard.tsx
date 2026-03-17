@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { Check } from "lucide-react";
 import type { EmojiEntry } from "@/data/emojis";
 import FavoriteButton from "@/components/FavoriteButton";
+import { useTrackCopy } from "@/hooks/useCopyStats";
 
 interface EmojiCardProps {
   entry: EmojiEntry;
@@ -10,16 +11,18 @@ interface EmojiCardProps {
 
 const EmojiCard = ({ entry }: EmojiCardProps) => {
   const [copied, setCopied] = useState(false);
+  const trackCopy = useTrackCopy();
 
   const handleCopy = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
       navigator.clipboard.writeText(entry.emoji);
+      trackCopy(entry.slug);
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
     },
-    [entry.emoji]
+    [entry.emoji, entry.slug, trackCopy]
   );
 
   return (

@@ -1,8 +1,9 @@
 import { useState, useMemo, useCallback } from "react";
-import { Search } from "lucide-react";
+import { Search, BarChart3 } from "lucide-react";
 import { emojis, searchEmojis, categories, categoryDisplayNames } from "@/data/emojis";
 import EmojiCard from "@/components/EmojiCard";
 import CategoryChip from "@/components/CategoryChip";
+import { useCopyStats } from "@/hooks/useCopyStats";
 
 const PAGE_SIZE = 200;
 
@@ -10,6 +11,7 @@ const Index = () => {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const { totalCopies } = useCopyStats();
 
   const results = useMemo(() => {
     let filtered = query ? searchEmojis(query) : emojis;
@@ -106,6 +108,18 @@ const Index = () => {
         <div className="py-16 text-center">
           <p className="text-4xl mb-3">🤷</p>
           <p className="text-muted-foreground">No emojis found. Try a different search.</p>
+        </div>
+      )}
+
+      {/* Stats */}
+      {totalCopies !== null && (
+        <div className="mt-12 border-t border-border pt-8 pb-4">
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <BarChart3 className="h-4 w-4" />
+            <span>
+              <strong className="text-foreground">{totalCopies.toLocaleString()}</strong> emoji{totalCopies !== 1 ? "s" : ""} copied by the community
+            </span>
+          </div>
         </div>
       )}
     </div>
