@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      copy_events: {
+        Row: {
+          copied_at: string
+          emoji_slug: string
+          id: string
+        }
+        Insert: {
+          copied_at?: string
+          emoji_slug: string
+          id?: string
+        }
+        Update: {
+          copied_at?: string
+          emoji_slug?: string
+          id?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
