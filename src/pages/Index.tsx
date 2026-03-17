@@ -110,6 +110,18 @@ const Index = () => {
           <p className="text-muted-foreground">No emojis found. Try a different search.</p>
         </div>
       )}
+
+      {/* Stats */}
+      {totalCopies !== null && (
+        <div className="mt-12 border-t border-border pt-8 pb-4">
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <BarChart3 className="h-4 w-4" />
+            <span>
+              <strong className="text-foreground">{totalCopies.toLocaleString()}</strong> emoji{totalCopies !== 1 ? "s" : ""} copied by the community
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
