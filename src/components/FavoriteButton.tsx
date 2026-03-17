@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useFavoritesContext } from "@/contexts/FavoritesContext";
 import { useNavigate } from "react-router-dom";
@@ -32,11 +32,9 @@ const FavoriteButton = ({ type, itemKey, className = "" }: FavoriteButtonProps) 
       className={`rounded-md p-1.5 transition-colors hover:bg-secondary ${className}`}
       aria-label={active ? "Remove from favorites" : "Add to favorites"}
     >
-      <Heart
-        className={`h-4 w-4 transition-colors ${
-          active ? "fill-primary text-primary" : "text-muted-foreground"
-        }`}
-      />
+      <span className={`text-sm transition-opacity ${active ? "opacity-100" : "opacity-40 grayscale"}`}>
+        🥳
+      </span>
     </button>
   );
 };
