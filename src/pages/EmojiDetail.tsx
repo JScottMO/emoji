@@ -40,6 +40,17 @@ const EmojiDetail = () => {
           <p className="mt-1 text-sm text-muted-foreground">{entry.group}</p>
         </div>
 
+        {/* Keywords */}
+        {entry.keywords.length > 0 && (
+          <div className="mb-6 flex flex-wrap justify-center gap-1.5">
+            {entry.keywords.map((kw) => (
+              <span key={kw} className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">
+                {kw}
+              </span>
+            ))}
+          </div>
+        )}
+
         {/* Copy actions */}
         <div className="mb-8 flex flex-wrap justify-center gap-2">
           <CopyButton text={entry.emoji} label="Copy Emoji" emojiSlug={entry.slug} />
