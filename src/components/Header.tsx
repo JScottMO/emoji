@@ -6,6 +6,7 @@ const navLinks = [
   { label: "Browse", path: "/" },
   { label: "Combos", path: "/combos" },
   { label: "Random", path: "/random" },
+  { label: "Feedback", path: "/feedback" },
   { label: "Privacy", path: "/privacy" },
 ];
 
