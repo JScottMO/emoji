@@ -112,6 +112,7 @@ interface GroupData {
 
 for (const group of emojiGroupData as GroupData[]) {
   for (const item of group.emojis) {
+    const keywords = cldrKeywords[item.emoji]?.default ?? [];
     const entry: EmojiEntry = {
       emoji: item.emoji,
       name: item.name,
@@ -120,6 +121,7 @@ for (const group of emojiGroupData as GroupData[]) {
       codePoints: getCodePoints(item.emoji),
       shortcode: toShortcode(item.name),
       popularity: popularityMap.has(item.emoji) ? popularityMap.get(item.emoji)! : 9999,
+      keywords,
     };
 
     allEmojis.push(entry);
