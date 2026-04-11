@@ -1,5 +1,6 @@
 import emojiGroupData from "unicode-emoji-json/data-by-group.json";
 import cldrAnnotations from "cldr-annotations-modern/annotations/en/annotations.json";
+import customSearchTerms from "./emoji_search_terms.json";
 
 export interface EmojiEntry {
   emoji: string;
@@ -73,7 +74,7 @@ popularityRanking.forEach((emoji, i) => popularityMap.set(emoji, i));
 
 // Build CLDR keyword map
 const cldrKeywords = (cldrAnnotations as any).annotations.annotations as Record<string, { default?: string[]; tts?: string[] }>;
-
+const customKeywords = customSearchTerms as Record<string, string[]>;
 
 function toSlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -112,7 +113,9 @@ interface GroupData {
 
 for (const group of emojiGroupData as GroupData[]) {
   for (const item of group.emojis) {
-    const keywords = cldrKeywords[item.emoji]?.default ?? [];
+    const cldrKw = cldrKeywords[item.emoji]?.default ?? [];
+    const customKw = customKeywords[item.emoji] ?? [];
+    const keywords = [...new Set([...cldrKw, ...customKw])];
     const entry: EmojiEntry = {
       emoji: item.emoji,
       name: item.name,
