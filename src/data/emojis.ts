@@ -9,6 +9,7 @@ export interface EmojiEntry {
   codePoints: string;
   shortcode: string;
   popularity: number;
+  keywords: string[];
 }
 
 // Top emojis by popularity (based on Unicode CLDR and social media usage data)
