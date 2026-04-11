@@ -1,4 +1,5 @@
 import emojiGroupData from "unicode-emoji-json/data-by-group.json";
+import cldrAnnotations from "cldr-annotations-modern/annotations/en/annotations.json";
 
 export interface EmojiEntry {
   emoji: string;
