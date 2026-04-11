@@ -36,6 +36,7 @@
         "@supabase/supabase-js": "^2.99.1",
         "@tanstack/react-query": "^5.83.0",
         "class-variance-authority": "^0.7.1",
+        "cldr-annotations-derived-modern": "^45.0.0",
         "cldr-annotations-modern": "^45.0.0",
         "clsx": "^2.1.1",
         "cmdk": "^1.1.1",
@@ -542,6 +543,8 @@
     "chokidar": ["chokidar@3.6.0", "", { "dependencies": { "anymatch": "~3.1.2", "braces": "~3.0.2", "glob-parent": "~5.1.2", "is-binary-path": "~2.1.0", "is-glob": "~4.0.1", "normalize-path": "~3.0.0", "readdirp": "~3.6.0" }, "optionalDependencies": { "fsevents": "~2.3.2" } }, "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw=="],
 
     "class-variance-authority": ["class-variance-authority@0.7.1", "", { "dependencies": { "clsx": "^2.1.1" } }, "sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg=="],
+
+    "cldr-annotations-derived-modern": ["cldr-annotations-derived-modern@45.0.0", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/cldr-annotations-derived-modern/-/cldr-annotations-derived-modern-45.0.0.tgz", {}, "sha512-IIgaQV6f9wx09TKfpx/o9A0qWcryoEPR3VkPwj+8Mwthkxtx0uQtYffBNTo7gDhBC1ADwKhOZbyi5eac6I56Tw=="],
 
     "cldr-annotations-modern": ["cldr-annotations-modern@45.0.0", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/cldr-annotations-modern/-/cldr-annotations-modern-45.0.0.tgz", {}, "sha512-y4YISGdwygWbXiYwWakzd4s0zY+83CceOPEZ+8bzCaPqCgX826Q2TSY3VqLPFE3830KbimgXpSousm2cep0mVw=="],
 
