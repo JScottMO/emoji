@@ -1,4 +1,5 @@
 import emojiGroupData from "unicode-emoji-json/data-by-group.json";
+import cldrAnnotations from "cldr-annotations-modern/annotations/en/annotations.json";
 
 export interface EmojiEntry {
   emoji: string;
@@ -8,6 +9,7 @@ export interface EmojiEntry {
   codePoints: string;
   shortcode: string;
   popularity: number;
+  keywords: string[];
 }
 
 // Top emojis by popularity (based on Unicode CLDR and social media usage data)
@@ -69,6 +71,9 @@ const popularityRanking: string[] = [
 const popularityMap = new Map<string, number>();
 popularityRanking.forEach((emoji, i) => popularityMap.set(emoji, i));
 
+// Build CLDR keyword map
+const cldrKeywords = (cldrAnnotations as any).annotations.annotations as Record<string, { default?: string[]; tts?: string[] }>;
+
 
 function toSlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -107,6 +112,7 @@ interface GroupData {
 
 for (const group of emojiGroupData as GroupData[]) {
   for (const item of group.emojis) {
+    const keywords = cldrKeywords[item.emoji]?.default ?? [];
     const entry: EmojiEntry = {
       emoji: item.emoji,
       name: item.name,
@@ -115,6 +121,7 @@ for (const group of emojiGroupData as GroupData[]) {
       codePoints: getCodePoints(item.emoji),
       shortcode: toShortcode(item.name),
       popularity: popularityMap.has(item.emoji) ? popularityMap.get(item.emoji)! : 9999,
+      keywords,
     };
 
     allEmojis.push(entry);
@@ -142,7 +149,8 @@ export function searchEmojis(query: string): EmojiEntry[] {
       e.name.toLowerCase().includes(q) ||
       e.shortcode.includes(q) ||
       e.emoji === q ||
-      e.group.toLowerCase().includes(q)
+      e.group.toLowerCase().includes(q) ||
+      e.keywords.some((kw) => kw.toLowerCase().includes(q))
   );
 }
 
