@@ -14,6 +14,7 @@ import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
 import Favorites from "./pages/Favorites";
 import Feedback from "./pages/Feedback";
+import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/feedback" element={<Feedback />} />
+                  <Route path="/unsubscribe" element={<Unsubscribe />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
