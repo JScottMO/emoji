@@ -8,6 +8,10 @@ const Footer = () => (
       <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground transition-colors">
         Privacy
       </Link>
+      {" · "}
+      <Link to="/feedback" className="underline underline-offset-2 hover:text-foreground transition-colors">
+        Feedback
+      </Link>
     </div>
   </footer>
 );
