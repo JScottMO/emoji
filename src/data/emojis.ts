@@ -113,7 +113,9 @@ interface GroupData {
 
 for (const group of emojiGroupData as GroupData[]) {
   for (const item of group.emojis) {
-    const keywords = cldrKeywords[item.emoji]?.default ?? [];
+    const cldrKw = cldrKeywords[item.emoji]?.default ?? [];
+    const customKw = customKeywords[item.emoji] ?? [];
+    const keywords = [...new Set([...cldrKw, ...customKw])];
     const entry: EmojiEntry = {
       emoji: item.emoji,
       name: item.name,
