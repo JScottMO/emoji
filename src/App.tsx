@@ -36,6 +36,7 @@ const App = () => (
                   <Route path="/privacy" element={<Privacy />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/favorites" element={<Favorites />} />
+                  <Route path="/feedback" element={<Feedback />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
