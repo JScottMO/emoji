@@ -149,7 +149,8 @@ export function searchEmojis(query: string): EmojiEntry[] {
       e.name.toLowerCase().includes(q) ||
       e.shortcode.includes(q) ||
       e.emoji === q ||
-      e.group.toLowerCase().includes(q)
+      e.group.toLowerCase().includes(q) ||
+      e.keywords.some((kw) => kw.toLowerCase().includes(q))
   );
 }
 
