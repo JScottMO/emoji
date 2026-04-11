@@ -71,6 +71,9 @@ const popularityRanking: string[] = [
 const popularityMap = new Map<string, number>();
 popularityRanking.forEach((emoji, i) => popularityMap.set(emoji, i));
 
+// Build CLDR keyword map
+const cldrKeywords = (cldrAnnotations as any).annotations.annotations as Record<string, { default?: string[]; tts?: string[] }>;
+
 
 function toSlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
