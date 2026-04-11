@@ -13,6 +13,7 @@ import Random from "./pages/Random";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
 import Favorites from "./pages/Favorites";
+import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
